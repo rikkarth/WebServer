@@ -1,4 +1,4 @@
-package org.academiadecodigo.network;
+package org.academiadecodigo.notorbios;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -6,7 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Single-threaded simple web server implementation
+ * Multi-threaded simple web server implementation based on AC web server single-threaded implementation
  */
 public class WebServer {
 
@@ -26,12 +26,12 @@ public class WebServer {
         try {
 
             WebServer webServer = new WebServer();
+
             while (true) {
 
                 webServer.bindSocket.accept();
 
                 new Thread(new Listen(webServer.bindSocket)).start();
-
             }
 
         } catch (NumberFormatException e) {

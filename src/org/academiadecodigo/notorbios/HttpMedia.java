@@ -1,4 +1,4 @@
-package org.academiadecodigo.network;
+package org.academiadecodigo.notorbios;
 
 public class HttpMedia {
 
