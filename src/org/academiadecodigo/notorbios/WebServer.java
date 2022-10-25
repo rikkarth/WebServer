@@ -25,11 +25,12 @@ public class WebServer {
 
         try {
 
-            WebServer webServer = new WebServer();
+            WebServer webServer = new WebServer(); // Instantiates new web server
 
+            // Server will always be listening and will create a new Thread per each request
             while (true) {
 
-                webServer.bindSocket.accept();
+                webServer.bindSocket.accept(); // Blocking method, will create new Thread if bindSocket receives a connection
 
                 new Thread(new Listen(webServer.bindSocket)).start();
             }
@@ -37,25 +38,33 @@ public class WebServer {
         } catch (NumberFormatException e) {
 
             System.err.println("Usage: WebServer [PORT]");
+
             System.exit(1);
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+
+            e.printStackTrace();
         }
     }
 
     private void setupServerSocket() {
+
         try {
+
             bindSocket = new ServerSocket(DEFAULT_PORT);
+
             logger.log(Level.INFO, "server bind to " + getAddress(bindSocket));
+
         } catch (IOException e) {
-            throw new RuntimeException(e);
+
+            e.printStackTrace();
         }
     }
 
     private String getAddress(ServerSocket socket) {
 
         if (socket == null) {
+
             return null;
         }
 

@@ -11,23 +11,29 @@ import java.util.regex.Pattern;
 
 public class Listen implements Runnable {
 
+    //PROPERTIES
     public final String DOCUMENT_ROOT = "www/";
     private static final Logger logger = Logger.getLogger(WebServer.class.getName());
     public ServerSocket bindSocket;
-
     public Socket clientSocket = null;
-
     public Listen(ServerSocket bindSocket){
         this.bindSocket = bindSocket;
     }
 
 
+    // METHODS
 
+    /**
+     * When invoked will listen for web requests
+     */
     private void listen() {
 
         serve(bindSocket);
     }
 
+    /**
+     * If server accepts connection, will dispatch the requested resource
+     */
     private void serve(ServerSocket bindSocket) {
 
         while (true) {

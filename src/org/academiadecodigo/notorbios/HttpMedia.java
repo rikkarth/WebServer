@@ -12,7 +12,6 @@ public class HttpMedia {
             default:
                 return false;
         }
-
     }
 
     public static boolean isHtml(String file) {
