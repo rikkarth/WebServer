@@ -54,16 +54,24 @@ public class Listen implements Runnable {
         }
     }
 
+    /**
+     * Will dispatch requested content if passes certain conditions
+     * @param clientSocket accepted connection from Web Server
+     */
     private void dispatch(Socket clientSocket) {
 
         try {
 
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+
             DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
 
             String requestHeaders = fetchRequestHeaders(in);
+
             if (requestHeaders.isEmpty()) {
+
                 close(clientSocket);
+
                 return;
             }
 
@@ -79,7 +87,6 @@ public class Listen implements Runnable {
                 reply(out, HttpHelper.notAllowed());
                 close(clientSocket);
                 return;
-
             }
 
             if (resource == null) {
@@ -98,6 +105,7 @@ public class Listen implements Runnable {
             }
 
             File file = new File(filePath);
+
             if (file.exists() && !file.isDirectory()) {
 
                 reply(out, HttpHelper.ok());
@@ -108,7 +116,6 @@ public class Listen implements Runnable {
                 reply(out, HttpHelper.notFound());
                 filePath = DOCUMENT_ROOT + "404.html";
                 file = new File(filePath);
-
             }
 
             reply(out, HttpHelper.contentType(filePath));
