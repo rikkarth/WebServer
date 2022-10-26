@@ -2,6 +2,9 @@ package org.academiadecodigo.notorbios;
 
 import java.io.*;
 import java.net.ServerSocket;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,6 +28,8 @@ public class WebServer {
 
         try {
 
+            ExecutorService clientExecutor = Executors.newCachedThreadPool();
+
             WebServer webServer = new WebServer(); // Instantiates new web server
 
             // Server will always be listening and will create a new Thread per each request
@@ -32,7 +37,7 @@ public class WebServer {
 
                 webServer.bindSocket.accept(); // Blocking method, will create new Thread if bindSocket receives a connection
 
-                new Thread(new Listen(webServer.bindSocket)).start();
+                clientExecutor.submit(new Listen(webServer.bindSocket));
             }
 
         } catch (NumberFormatException e) {

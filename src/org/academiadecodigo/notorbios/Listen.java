@@ -17,6 +17,7 @@ public class Listen implements Runnable {
     public ServerSocket bindSocket;
     public Socket clientSocket = null;
     public Listen(ServerSocket bindSocket){
+
         this.bindSocket = bindSocket;
     }
 
@@ -41,6 +42,7 @@ public class Listen implements Runnable {
             try {
 
                 clientSocket = bindSocket.accept();
+
                 logger.log(Level.INFO, "new connection from " + getAddress(clientSocket));
 
                 dispatch(clientSocket);
